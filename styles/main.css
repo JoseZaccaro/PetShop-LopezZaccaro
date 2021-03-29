@@ -1,0 +1,599 @@
+* {
+  box-sizing: initial;
+}
+
+p.nada {
+  font-family: 'Chango', cursive;
+  font-family: 'Dancing Script', cursive;
+  font-family: 'Dela Gothic One', cursive;
+  font-family: 'Diplomata SC', cursive;
+  font-family: 'Great Vibes', cursive;
+  font-family: 'New Tegomin', serif;
+  font-family: 'Pacifico', cursive;
+  font-family: 'Staatliches', cursive;
+  font-family: 'Train One', cursive;
+  font-family: 'Vast Shadow', cursive;
+  font-family: 'Wallpoet', cursive;
+  /* ---------------------------------------------- */
+  font-family: 'Alegreya Sans SC', sans-serif;
+  font-family: 'Federo', sans-serif;
+  font-family: 'Jura', sans-serif;
+  font-family: 'Michroma', sans-serif;
+  font-family: 'Montaga', serif;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Syncopate', sans-serif;
+  font-family: 'Vollkorn SC', serif;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-family: 'Yeon Sung', cursive;
+}
+
+body {
+  font-family: 'Vollkorn SC', serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.over-hidden {
+  overflow: hidden;
+}
+
+.loading {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pug-animation {
+
+  0% {
+    left: 0px;
+    top: 0px;
+  }
+
+  25% {
+    left: 95vw;
+    top: 0px;
+  }
+
+  50% {
+    left: 95vw;
+    top: 90vh;
+    transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  75% {
+    left: 0px;
+    top: 90vh;
+  }
+
+  100% {
+    left: 0px;
+    top: 0px;
+  }
+}
+
+.pug {
+  position: fixed;
+  width: 5vw;
+  animation-name: pug-animation;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+
+.parallax {
+  background: #fff fixed no-repeat 50% 20%;
+  background-size: cover;
+}
+
+
+
+
+
+
+
+
+
+.descripcion::-webkit-scrollbar {
+  display: none;
+}
+
+.descripcion {
+
+  padding: 1vh;
+  max-height: 20vh;
+  border-radius: 2%;
+  background-color: #aa3ed875;
+
+}
+
+.item-list {
+  border-radius: 3%;
+  background-color: white;
+  padding: 2vw;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  margin: 3vw;
+  width: 17vw;
+  transition: 0.5s;
+
+}
+
+.item-list:hover {
+  width: 20vw;
+  border: 1px solid black;
+
+}
+
+.item-image {
+  border-radius: 50px;
+  padding: 2vw;
+
+  border: solid #aa3ed875;
+}
+
+.item-description {
+  padding-top: 1rem;
+  margin: 0;
+  min-height: 8vh;
+  text-align: start;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.avaible-units {
+  padding: 5px;
+  border-radius: 20px;
+  background-color: greenyellow;
+}
+
+.last-units {
+  padding: 5px;
+  border-radius: 20px;
+  font-weight: bold;
+  background-color: red;
+  color: white;
+  text-decoration: underline;
+}
+
+.no-units {
+  text-align: center;
+  text-decoration: line-through;
+  color: black;
+}
+
+.dollar {
+  font-size: 26px;
+  color: #4ABB53;
+  font-weight: bold;
+}
+
+.item-pug {
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin-bottom: 6vh;
+}
+
+.read-more {
+  margin-right: 50%;
+  transition: 0.2s;
+  color: royalblue;
+  cursor: pointer;
+  font-size: 100%;
+
+}
+
+.read-more:hover {
+  transition: 0.2s;
+  color: blue;
+  font-size: 120%;
+
+}
+
+.hiddenText {
+  display: none;
+}
+
+.show-table {
+  display: none;
+}
+
+#form {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10vh;
+  margin-top: 10vh;
+  padding: 2vw;
+  width: 45vw;
+  min-height: 100vh;
+  border-radius: 15px;
+}
+
+.contact-h1 {
+  color: rgb(0, 0, 0);
+  margin-top: 10vh;
+  padding: 1vw;
+  border-radius: 20px;
+  background: rgba(255, 255, 0, 0.5);
+}
+
+.required {
+  font-size: 24px;
+  color: red;
+}
+
+legend {
+  font-size: 16px;
+}
+
+.form-fieldset {
+  padding: 1vw;
+  margin: 0 5vw;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.form-fieldset>div {
+  margin: 1vw 0;
+}
+
+#form .flex-row div.gato {
+  margin-left: 2vw;
+}
+
+#form .form-fieldset div.justify-content-between a {
+  margin-left: 5vw;
+}
+
+.textarea {
+  width: 80%;
+}
+
+
+#secondArticle {
+  /* padding-top: 5vh; */
+
+  padding: 5% 5%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  background-image: url(https://worlddogfinder.com/imager/1200x630/upload/standard_schnauzer.jpg);
+
+}
+
+.text-white>li {
+  margin: 0 20%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.table-container {
+  width: 40%;
+  align-self: center;
+}
+
+.ubi {
+  text-align: center;
+  width: 40%;
+  /* height: ; */
+}
+
+.ubi>*:not(.map) {
+  opacity: 0.7;
+}
+
+.map {
+  width: 100%;
+  height: 60%;
+  border-radius: 25px;
+  opacity: 0.85;
+}
+
+.hours {
+  opacity: 0.8;
+}
+
+#carousel-container {
+  min-width: 100vw;
+  height: 80vh;
+}
+
+
+
+
+
+
+
+
+
+.header-nav {
+  transition: 0.8s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vw;
+  padding: 0 2vw;
+  background-color: rgba(250, 223, 196, 1);
+
+
+}
+
+.navi-bar {
+  transition: 0.8s;
+  display: flex;
+  justify-content: space-between;
+  width: 65vw;
+  font-size: 25px;
+}
+
+.nav-anchor {
+  text-decoration: none;
+  color: black;
+}
+
+img.img-titulo {
+  transition: 0.8s;
+  width: 20vw;
+}
+
+a {
+  padding: 1%;
+
+}
+
+a:hover {
+  color: blue;
+  text-shadow: 1px 1px 2px greenyellow;
+}
+
+.selected-page {
+  font-family: 'Great Vibes', cursive;
+  font-weight: bold;
+}
+
+
+
+
+
+
+.carrito {
+  transition: 0.8s;
+  width: 4vw;
+  padding: 20px;
+  margin-left: 1vw;
+}
+
+.item-carrito {
+  margin-left: 10px;
+  width: 2vw;
+}
+
+.page {
+  transition: 0.8s;
+  position: sticky;
+  left: 0;
+  top: 0;
+  height: 9vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2vw;
+  background-color: rgba(250, 223, 196, 1);
+}
+
+.page img.img-titulo {
+  transition: 0.8s;
+  width: 10vw;
+}
+
+.page .carrito {
+  transition: 0.8s;
+  width: 2vw;
+  margin-left: 0;
+}
+
+.page .navi-bar {
+  transition: 0.8s;
+  width: 75vw;
+  font-size: 20px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+
+
+
+
+main {
+  /* background-color:rgba(0, 0, 0, 0.5); */
+  min-width: 100%;
+  min-height: 100%;
+
+}
+
+footer {
+  width: 100%;
+  height: 10vh;
+}
+
+
+.main-index {
+  background-image: url("https://i.pinimg.com/originals/67/83/09/6783090787fd75ddd71f6f81514800b5.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.main-gato {
+  width: 100%;
+  background-image: url("../assets/gatoRompe2.png");
+  background-repeat: no-repeat;
+  background-size: 30vw;
+  background-position: 50% 50%;
+}
+
+.main-shnauzer {
+  width: 50%;
+  background-image: url("../assets/schnauzerRock.png");
+  background-repeat: no-repeat;
+  background-size: 35vw;
+  background-position: 50% 50%;
+}
+
+.texto {
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+  padding-left: 2vw;
+  color: gold;
+}
+
+.texto h1 {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-right: 10%;
+  padding: 2%;
+}
+
+.texto h2 {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  padding: 2%;
+}
+
+.texto p {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2%;
+  margin: 8% 25% 0% 0;
+
+}
+
+article div.texto {
+  width: 50%;
+  margin-right: 2%;
+}
+
+article div.texto p {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2%;
+  margin: 5% 0% 0% auto;
+
+}
+
+
+
+#container {
+  margin-left: 10vw;
+  margin-top: 10vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+
+}
+
+.main-toys {
+  background-image: url("../assets/findo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.main-farma {
+  background-image: url("../assets/farma.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.main-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: fixed no-repeat 60% 95%;
+
+  background-image: url("https://irp-cdn.multiscreensite.com/b7dc6c81/DESKTOP/jpg/230838-america-veterinaria-banner-2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+#article-contact {
+  width: 100vw;
+  min-height: 100vh;
+  background: fixed no-repeat 50% 50%;
+  background-image: url("../assets/error.png");
+
+  background-size: cover;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.footer-copy {
+  height: 10vh;
+  background-color: #00467F;
+}
