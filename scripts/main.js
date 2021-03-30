@@ -174,13 +174,20 @@ function form() {
         icon: 'success',
         showConfirmButton:false
       }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.dismiss === Swal.DismissReason.timer || result.dismiss === Swal.DismissReason.backdrop) {
           window.location.reload()
         }
       })
+    }else if(name == "" && email == ""){
+      Swal.fire({
+        title:"Alerta!",
+        text:"Debes ingresar los datos minimos e indispensables para el contacto!",
+        icon:"error"
+      })
     }
 })
-  deleteInfo.addEventListener("click", () =>
+  deleteInfo.addEventListener("click", () =>{
+
     Swal.fire({
       title: 'Segur@ que deseas eliminar tus datos? ',
       text: "",
@@ -213,6 +220,7 @@ function form() {
 
       }
     })
+  }
 )}
 
 function myProgram(data) {
@@ -326,19 +334,27 @@ function myProgram(data) {
       buttons.appendChild(limpiarCarrito)
 
       buttons.classList.add("buttons-cart")
-      comprar.addEventListener("click", ()=> {
-        main.innerHTML = `
-        <div class="gracias">
-        <h1>Muchas gracias por su compra!</h1>
-        
-        </div>
-        `
-
-
+      limpiarCarrito.addEventListener("click",()=>{
+        localStorage.removeItem("itemsCarrito")
+        window.location.reload()
       })
+      // comprar.addEventListener("click", ()=> {
+      //   main.innerHTML = `
+      //   <div class="gracias">
+
+      //   <h1>Muchas gracias por su compra!</h1>
+      //   <div> </div>
+      //   </div>
+      //   `
+      // })
       main.appendChild(buttons)
 
     } else {
+     let main = document.getElementsByClassName("main-cart")[0]
+      let noItems = document.createElement("div")
+      noItems.classList.add("noItems")
+      noItems.innerHTML = `<h1> No hay productos en el carrito!.</h1>` 
+      main.appendChild(noItems)
       
     }
   }

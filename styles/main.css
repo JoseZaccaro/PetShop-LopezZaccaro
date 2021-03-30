@@ -482,8 +482,22 @@ a:hover {
   visibility:visible;
 }
 
+.noItems{
+width: 90vw;
+height: 80vh;
+background-image: url("https://thumbs.dreamstime.com/b/perro-de-pomeranian-al-lado-de-un-carro-de-compras-vac%C3%ADo-23827008.jpg");
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+}
+.gracias{
+  width: 100vw;
+  background-image: url("");
 
-
+}
 
 
 main {
