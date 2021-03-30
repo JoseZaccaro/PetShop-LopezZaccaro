@@ -8,6 +8,7 @@ if (document.title.includes("Farmacia") || document.title.includes("Juguetes") |
 }
 
 
+
 window.onload = function () {
   let main = undefined
   if (document.title.includes("Inicio")) {
@@ -16,6 +17,7 @@ window.onload = function () {
     main = document.getElementById("main-farma")
   } else if (document.title.includes("Juguetes")) {
     main = document.getElementById("main-toys")
+
   } else if (document.title.includes("Contacto")) {
     main = document.getElementById("main-contact")
   } else if (document.title.includes("Carrito")) {
@@ -41,13 +43,12 @@ const headerPage = document.getElementById("header")
 document.addEventListener("scroll", navBar);
 
 function navBar() {
-
-  if (document.documentElement.scrollTop >= 40) {
-    headerPage.classList.replace("header-nav", "page")
-
-  } else if (document.documentElement.scrollTop < 10) {
-    headerPage.classList.replace("page", "header-nav")
-
+  if (!document.title.includes("Carrito")) {
+    if (document.documentElement.scrollTop >= 40) {
+      headerPage.classList.replace("header-nav", "page")
+    } else if (document.documentElement.scrollTop < 10) {
+      headerPage.classList.replace("page", "header-nav")
+    }
   }
 }
 
@@ -64,9 +65,13 @@ function form() {
   const submitBtn = document.getElementById('submit');
   const deleteInfo = document.getElementById('delete');
 
-
+  if (localStorage.getItem("pug") != "no") {
+    console.log(localStorage.getItem("pug"))
+    localStorage.setItem("pug", "no")
+    pug.classList.replace("visible", "hidden")
+  }
   submitBtn.addEventListener("click", (event) => {
-    // event .preventDefault()
+
     localStorage.setItem("name", nameInput.value)
     localStorage.setItem("last_name", lastNameInput.value)
     localStorage.setItem("email", emailInput.value)
@@ -75,6 +80,7 @@ function form() {
     localStorage.setItem("allow_notif", notifInput.checked ? "allow" : "deny")
     localStorage.setItem("dog", dogInput.checked ? "dog" : "noDog")
     localStorage.setItem("cat", catInput.checked ? "cat" : "noCat")
+    localStorage.setItem("pug", "no")
 
     let name = localStorage.getItem("name")
     let lastName = localStorage.getItem("last_name")
@@ -85,15 +91,65 @@ function form() {
     let dog = localStorage.getItem("dog")
     let cat = localStorage.getItem("cat")
 
+    let pug = document.getElementById("pug")
+
 
 
     if (name && lastName && email && phone && coments && notif) {
       event.preventDefault()
+
       Swal.fire({
-        timer: 4000,
+        timer: 10000,
         title: `Genial!!`,
         text: `Atrapa el pug y gana un premio!!!`,
-        icon: 'success'
+        icon: 'question',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "A jugar!",
+        cancelButtonText: "Adios!",
+        cancelButtonColor: "#EB4134"
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+
+          if (localStorage.getItem("pug") != "si") {
+
+            localStorage.setItem("pug", "si")
+
+            pug.classList.replace("hidden", "visible")
+
+            pug.addEventListener("click", () => {
+
+              Swal.fire({
+                title: "Felicidades!!!",
+                text: `Ganaste un saludo especial ${name} que tengas un buen día!`,
+                showConfirmButton: true,
+                confirmButtonText: "Gracias!",
+                showCancelButton: false,
+                timer: "10000"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  pug.classList.replace("visible", "hidden")
+                  window.location.reload()
+                }
+              })
+            })
+          }
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          Swal.fire({
+            title: 'Muchas gracias!',
+            text: 'Nos pondremos en contacto a la brevedad!',
+            showConfirmButton: false,
+            icon: "success",
+            timer: 2500
+          }).then(result => {
+            window.location.reload()
+          })
+        }
+
+
       })
     } else if (name && email && phone && dog != "noDog") {
       event.preventDefault()
@@ -103,19 +159,27 @@ function form() {
         title: "Que bien!",
         text: "Serás contactado a la brevedad (Nosotros también adoramos a los caninos🐕!)",
         icon: "success"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
       })
     } else if (name && email) {
 
       event.preventDefault()
       Swal.fire({
-        timer: 3000,
+        timer: 2500,
         title: `Bien hecho ${name}`,
         text: `Se te enviará un email a la direccion ${email} la brevedad!`,
-        icon: 'success'
+        icon: 'success',
+        showConfirmButton:false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
       })
     }
-  })
-
+})
   deleteInfo.addEventListener("click", () =>
     Swal.fire({
       title: 'Segur@ que deseas eliminar tus datos? ',
@@ -133,59 +197,150 @@ function form() {
           title: 'Borrado!',
           text: 'Tus datos fueron borrados con exito.',
           icon: 'success'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload()
+            localStorage.removeItem("name")
+            localStorage.removeItem("last_name")
+            localStorage.removeItem("email")
+            localStorage.removeItem("phone_number")
+            localStorage.removeItem("coments")
+            localStorage.removeItem("allow_notif")
+            localStorage.removeItem("dog")
+            localStorage.removeItem("cat")
+          }
         })
-        localStorage.removeItem("name")
-        localStorage.removeItem("last_name")
-        localStorage.removeItem("email")
-        localStorage.removeItem("phone_number")
-        localStorage.removeItem("coments")
-        localStorage.removeItem("allow_notif")
-        localStorage.removeItem("dog")
-        localStorage.removeItem("cat")
+
       }
     })
-  )
-}
+)}
 
 function myProgram(data) {
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 2000,
+    // timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('click', ()=>{window.location.href("./index.html")})
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
   const allElements = [...data["response"]]
-  const table = document.getElementById("table-body")
   const container = document.getElementById("container")
   const tittleTypo = document.title
   let property = null
+  let carrito = []
 
-
-  if (localStorage.getItem("itemsCarrito")) {
-    let itemsCarrito = localStorage.getItem("itemsCarrito")
-    let items = itemsCarrito.split(",")
-    let carrito = []
-    items.forEach(function(item){
-    carrito.push(...(allElements.filter(elemento => elemento._id == item )))  
-  })
-    if(tittleTypo.includes("Carrito")){
-
-      tableStorage(carrito)
-    
-    }
-    console.log(items)
-    console.log(carrito)
-  } else {
-
-    itemsCarrito = []
-  }
   
 
-  function tableStorage(itemsCarrito) {
-    // let datosFiltrados = allElements.filter(elemento => elemento.tipo == property)
-    itemsCarrito.map(elemento =>
-      table.innerHTML += `
-    <tr>
-    <td>${elemento.nombre}</td>
-    <td>${elemento.stock}</td>
-    <td>$${elemento.precio}</td>
-    <td></td>
-    </tr>
-    `)
+  if (tittleTypo.includes("Carrito")) {
+    if (localStorage.getItem("itemsCarrito")) {
+    let carritoSinRepetidos = []
+
+
+    let main = document.getElementsByClassName("main-cart")[0]
+    let tablaProductos = document.createElement("article")
+    let itemsCarrito = localStorage.getItem("itemsCarrito")
+    let items = itemsCarrito.split(",")
+    let itemsNoRep = new Set(items)
+    let totalAPagar = 0
+
+
+    items.forEach(function (item) {
+      carrito.push(...(allElements.filter(elemento => elemento._id == item)))
+    })
+
+    itemsNoRep.forEach(function (item) {
+      carritoSinRepetidos.push(...(allElements.filter(elemento => elemento._id == item)))
+    })
+
+
+
+    carrito.forEach(producto => {
+    if(totalAPagar != 0){
+       totalAPagar = totalAPagar + producto.precio
+     }else{
+       totalAPagar = producto.precio
+     }
+    })
+    console.log(totalAPagar)
+      tablaProductos.classList.add("show-table")
+      tablaProductos.innerHTML = `
+      <table class="table table-hover">
+        <thead class="table-dark">
+         <tr>
+            <th>Producto</th>
+            <th class="text-center">Precio Unitario </th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Total a pagar</th>
+         </tr>
+        </thead>
+        <tbody class="table-light" id="table-body">
+
+        </tbody>
+        <tfoot class="table-dark table-active">
+        <tr>
+        <td class="text-center">Total:</td>
+          <td></td>
+          <td></td>
+          <td class="text-center">$ ${totalAPagar}</td>
+          </tr>
+        </tfoot>
+      </table>
+    `
+      main.appendChild(tablaProductos)
+      carritoSinRepetidos.map(elemento =>{
+        let tbody = document.getElementById("table-body")
+        let tr = document.createElement("tr")
+          tr.innerHTML += `
+            <tr>
+              <td class="producto">${elemento.nombre}</td>
+              <td>$${elemento.precio}</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+            `
+          tbody.appendChild(tr)
+          })
+      
+      console.log("items",items)
+      console.log("carrito",carrito)
+      console.log("carrito sin rep",carritoSinRepetidos)
+        
+      let buttons = document.createElement("div")
+
+      let comprar = document.createElement("button")
+
+      let limpiarCarrito = document.createElement("button")
+
+      comprar.classList.add("btn","btn-primary")
+      comprar.innerText = "Comprar"
+
+      limpiarCarrito.classList.add("btn","btn-danger")
+      limpiarCarrito.innerText = "Eliminar carrito"
+      buttons.appendChild(comprar)
+
+      buttons.appendChild(limpiarCarrito)
+
+      buttons.classList.add("buttons-cart")
+      comprar.addEventListener("click", ()=> {
+        main.innerHTML = `
+        <div class="gracias">
+        <h1>Muchas gracias por su compra!</h1>
+        
+        </div>
+        `
+
+
+      })
+      main.appendChild(buttons)
+
+    } else {
+      
+    }
   }
 
   function tienda() {
@@ -228,13 +383,16 @@ function myProgram(data) {
     
     <div class ="buttons">
     
-    <button class="btn btn-warning">Comprar</button>
     
-    <button class="btn btn-success" id="${elemento._id}"><img src="./assets/carrito.png" alt="carro" class="item-carrito"> Añadir</button>
+    <button class="btn btn-success" id="${elemento._id}"><img src="./assets/carrito.png" alt="carro" class="item-carrito ${elemento._id}"> Añadir al carrito.</button>
+
+      
     </div>
     
     `
-
+{/* <div id="cantidad">
+        <input type="number" min="1" max="${elemento.stock }" step="1" value="1">
+      </div> */}
         container.appendChild(carta)
         let desc = document.getElementById("read-" + contador)
         desc.addEventListener("click", () => {
@@ -264,43 +422,56 @@ function myProgram(data) {
 
         document.getElementById(elemento._id).addEventListener("click", (e) => {
           let item = e.target.id
-          if (localStorage.getItem("itemsCarrito")) {
-          items = localStorage.getItem("itemsCarrito")
-          items = items.split(",")
-          if(item != ""){
 
-            Swal.fire({
-              text: 'Toast with custom target',
-              target: '#custom-target',
-              customClass: {
-                container: 'position-absolute'
-              },
-              toast: true,
-              position: 'bottom-right'
-            })
+          if (item == "") {
+            item = e.path[0].classList[1]
           }
-        }
+          if (localStorage.getItem("itemsCarrito")) {
+            items = localStorage.getItem("itemsCarrito")
+            items = items.split(",")
+          }
 
           items.push(item)
           localStorage.setItem("itemsCarrito", items)
+
           console.log(items)
+
+          items.forEach(function (item) {
+            carrito.push(...(allElements.filter(elemento => elemento._id == item)))
+          })
+
+
+          Toast.fire({
+            text: 'Producto añadido al carrito.',
+            target: '#custom-target',
+            customClass: {
+              container: 'position-fixed'
+            },
+            icon: "success",           
+          })
         })
         contador++
+
+
       })
+
       let perro = document.createElement("div")
       perro.classList.add("item-pug")
       perro.innerHTML += `
-  <img src="./assets/pugTexto.png" alt="pug-footer">
-  `
+      <img src="./assets/pugTexto.png" alt="pug-footer">
+      `
       container.appendChild(perro)
+      // datosFiltrados.forEach(item => {masYMenos(datosFiltrados.indexOf(item))})
+
     }
     storage(property)
+
+
   }
 
-  if (document.title.includes("Carrito")) {
-    // console.log(items)
-    // tableStorage(itemsCarrito)
-  } else {
+
+  if (!document.title.includes("Carrito")) {
+
     tienda()
   }
 }

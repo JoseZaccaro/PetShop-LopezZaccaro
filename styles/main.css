@@ -194,8 +194,9 @@ body {
 }
 
 .buttons {
+  margin-top: 2vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 
@@ -242,17 +243,10 @@ body {
 
 }
 
-.custom-target {
-  position: sticky;
-  left: 90%;
-  top: 90%;
+#custom-target {
+  position: absolute;
   width: 600px;
   height: 300px;
-  /* border-style: solid; */
-}
-
-.position-absolute {
-  position: absolute;
 }
 
 
@@ -340,6 +334,7 @@ legend {
   margin-top: 10vh;
   align-self: center;
 }
+
 .h2-bg{
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1vw;
@@ -370,6 +365,7 @@ legend {
 }
 
 .hours {
+  font-size: 1.5em;
   opacity: 0.8;
 }
 
@@ -481,6 +477,9 @@ a:hover {
 
 .hidden {
   visibility: hidden;
+}
+.visible {
+  visibility:visible;
 }
 
 
@@ -599,7 +598,38 @@ article div.texto p {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+.main-cart{
+  background-image: url("https://cdn.redcanina.es/wp-content/uploads/2019/02/08104552/perro-dinero-750x375.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 100vw; */
+  min-height: 75vh;
+}
+.buttons-cart{
+  width: 60%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+.buttons-cart > button{
+margin-left: 2vw;
+margin-top: 1vh;
+}
+.show-table{
+  margin-top: 5vh;
+  width: 60%;
+  align-self: center;
+}
+tbody#table-body{
+text-align: center;
+}
+.producto{
+  text-align: start;
+}
 
 #article-contact {
   width: 100vw;
@@ -618,3 +648,11 @@ article div.texto p {
   height: 10vh;
   background-color: #00467F;
 }
+
+
+
+
+
+
+
+
