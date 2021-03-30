@@ -314,7 +314,7 @@ legend {
 
 #secondArticle {
   /* padding-top: 5vh; */
-
+  border-top: solid black;
   padding: 5% 5%;
   height: 100vh;
   display: flex;
@@ -333,6 +333,10 @@ legend {
   width: 100%;
   margin-top: 10vh;
   align-self: center;
+}
+table.hours{
+  border:1px solid black;
+
 }
 
 .h2-bg{
@@ -383,6 +387,8 @@ legend {
 
 
 .header-nav {
+  border-bottom: 1px solid black;
+
   transition: 0.8s;
   display: flex;
   justify-content: space-between;
@@ -445,6 +451,8 @@ a:hover {
 }
 
 .page {
+  border-bottom:1px solid black;
+
   transition: 0.8s;
   position: sticky;
   left: 0;
