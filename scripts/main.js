@@ -94,7 +94,7 @@ function form() {
 
 
 
-    if (name && lastName && email && phone && coments && notif) {
+    if (name!="" && lastName!="" && email!="" && phone!="" && coments!="" && notif!="") {
       event.preventDefault()
 
       Swal.fire({
@@ -150,7 +150,7 @@ function form() {
 
 
       })
-    } else if (name && email && phone && dog != "noDog") {
+    } else if (name!="" && email!="" && phone!="" && dog != "noDog") {
       event.preventDefault()
 
       Swal.fire({
@@ -163,7 +163,7 @@ function form() {
           window.location.reload()
         }
       })
-    } else if (name && email) {
+    } else if (name != "" && email.includes("@")) {
 
       event.preventDefault()
       Swal.fire({
