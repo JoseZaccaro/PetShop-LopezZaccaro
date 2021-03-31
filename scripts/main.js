@@ -66,7 +66,6 @@ function form() {
   const deleteInfo = document.getElementById('delete');
 
   if (localStorage.getItem("pug") != "no") {
-    console.log(localStorage.getItem("pug"))
     localStorage.setItem("pug", "no")
     pug.classList.replace("visible", "hidden")
   }
@@ -245,10 +244,9 @@ function myProgram(data) {
   
 
   if (tittleTypo.includes("Carrito")) {
+
     if (localStorage.getItem("itemsCarrito")) {
     let carritoSinRepetidos = []
-
-
     let main = document.getElementsByClassName("main-cart")[0]
     let tablaProductos = document.createElement("article")
     let itemsCarrito = localStorage.getItem("itemsCarrito")
@@ -274,7 +272,27 @@ function myProgram(data) {
        totalAPagar = producto.precio
      }
     })
-    console.log(totalAPagar)
+    let arrayRepetidos = []
+
+    for (let i = 0; i < carritoSinRepetidos.length; i++) {
+      let producto1 = carritoSinRepetidos[i]
+      producto1.vecesRepetido = 0
+      for (let iB = 0; iB < carrito.length; iB++) {
+        let producto2 = carrito[iB]
+
+        if (producto1 == producto2) {
+          producto1.vecesRepetido += 1
+          let nombreProductoRepetido = producto1.nombre
+            arrayRepetidos.push({
+              vecesRepetido:producto1.vecesRepetido,
+              productoRepetido:nombreProductoRepetido}
+              )
+            
+              // console.log(arrayRepetidos)
+          } 
+        }
+      }
+    
       tablaProductos.classList.add("show-table")
       tablaProductos.innerHTML = `
       <table class="table table-hover">
@@ -284,6 +302,7 @@ function myProgram(data) {
             <th class="text-center">Precio Unitario </th>
             <th class="text-center">Cantidad</th>
             <th class="text-center">Total a pagar</th>
+            <th></th>
          </tr>
         </thead>
         <tbody class="table-light" id="table-body">
@@ -295,6 +314,7 @@ function myProgram(data) {
           <td></td>
           <td></td>
           <td class="text-center">$ ${totalAPagar}</td>
+          <td></td>
           </tr>
         </tfoot>
       </table>
@@ -307,16 +327,55 @@ function myProgram(data) {
             <tr>
               <td class="producto">${elemento.nombre}</td>
               <td>$${elemento.precio}</td>
-              <td>1</td>
-              <td></td>
+              <td>${elemento.vecesRepetido}</td>
+              <td>$${elemento.vecesRepetido * elemento.precio}</td>
+              <td>
+              <div class="plusMinus"><img src="./assets/plus.png" class="${elemento._id}A plusMinusButton"><img src="./assets/minus.png" class="${elemento._id}B plusMinusButton" ></div>
+              </td>
+              
             </tr>
             `
           tbody.appendChild(tr)
+
+          let botonA = document.getElementsByClassName(elemento._id + "A")[0]
+          let botonB = document.getElementsByClassName(elemento._id+"B")[0]
+          
+          botonA.addEventListener("click",(e)=>{
+            // console.log(e.target.classList[0].slice(0,-1))
+            let productoAInsertar = e.target.classList[0].slice(0,-1)
+            items.push(productoAInsertar)
+            
+            localStorage.setItem("itemsCarrito",items)
+            
+            location.reload()
+
+
+
           })
+
+          botonB.addEventListener("click",(e)=>{
+            // console.log(e.target.classList[0].slice(0,-1))
+            let productoAQuitar = e.target.classList[0].slice(0,-1)
+            let ordenar = [...items]
+            
+            ordenar.sort((a,b)=>a-b);
+            console.log(ordenar)
+            let indice = ordenar.indexOf(productoAQuitar)
+
+            if(indice != -1){
+              ordenar.splice(indice,1)
+            }
+            // items.pop(productoAQuitar)
+
+            localStorage.setItem("itemsCarrito",ordenar)
+            window.location.reload()
+          })
+
+        })
       
-      console.log("items",items)
-      console.log("carrito",carrito)
-      console.log("carrito sin rep",carritoSinRepetidos)
+      // console.log("items",items)
+      // console.log("carrito",carrito)
+      // console.log("carrito sin rep",carritoSinRepetidos)
         
       let buttons = document.createElement("div")
 
@@ -350,6 +409,10 @@ function myProgram(data) {
       main.appendChild(buttons)
 
     } else {
+
+
+
+
      let main = document.getElementsByClassName("main-cart")[0]
       let noItems = document.createElement("div")
       noItems.classList.add("noItems")
@@ -394,9 +457,6 @@ function myProgram(data) {
     <div id"original-${contador}">
     <p class="text-capitalize read-more" id="read-${contador}" >leer más...</p>
     </div>
-    
-  
-    
     <div class ="buttons">
     
     
@@ -450,7 +510,7 @@ function myProgram(data) {
           items.push(item)
           localStorage.setItem("itemsCarrito", items)
 
-          console.log(items)
+          // console.log(items)
 
           items.forEach(function (item) {
             carrito.push(...(allElements.filter(elemento => elemento._id == item)))
