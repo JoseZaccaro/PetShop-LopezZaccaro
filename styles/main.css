@@ -158,7 +158,12 @@ body {
   background-color: #aa3ed875;
 
 }
+.div-img{
+  width: 100%;
+ 
+  height: 100%;
 
+}
 .item-list {
   border-radius: 3%;
   background-color: white;
@@ -169,22 +174,29 @@ body {
   justify-content: space-between;
   margin: 3vw;
   width: 18vw;
-  transition: 0.5s;
 
 }
 
-.item-list:hover {
-  width: 20vw;
-  border: 1px solid black;
 
-}
 
 .item-image {
   border-radius: 50px;
   padding: 2vw;
-
+  width: 100%;
   border: solid #aa3ed875;
 }
+
+
+.image-container{
+  min-width: 20vw;
+  min-height: 35vh;
+  background-position: center;
+  background-size: 15vw;
+  background-repeat: no-repeat;
+
+}
+
+
 
 .item-description {
   padding-top: 1rem;
@@ -245,8 +257,8 @@ body {
 
 #custom-target {
   position: absolute;
-  width: 600px;
-  height: 300px;
+  width: 0;
+  height: 0;
 }
 
 
@@ -309,6 +321,8 @@ legend {
 
 .textarea {
   width: 80%;
+  height: 25vh;
+  resize: none;
 }
 
 
@@ -435,7 +449,9 @@ a:hover {
 
 
 
-
+.tostada{
+  cursor: pointer;
+}
 
 
 .carrito {
@@ -460,7 +476,7 @@ a:hover {
 
 .item-carrito {
   margin-left: 10px;
-  width: 2vw;
+  width: 15%;
 }
 
 .page {

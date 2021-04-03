@@ -94,7 +94,7 @@ function form() {
 
 
 
-    if (name!="" && lastName!="" && email!="" && phone!="" && coments!="" && notif!="") {
+    if (name != "" && lastName != "" && email != "" && phone != "" && coments != "" && notif != "") {
       event.preventDefault()
 
       Swal.fire({
@@ -150,7 +150,7 @@ function form() {
 
 
       })
-    } else if (name!="" && email!="" && phone!="" && dog != "noDog") {
+    } else if (name != "" && email != "" && phone != "" && dog != "noDog") {
       event.preventDefault()
 
       Swal.fire({
@@ -171,21 +171,21 @@ function form() {
         title: `Bien hecho ${name}`,
         text: `Se te enviará un email a la direccion ${email} la brevedad!`,
         icon: 'success',
-        showConfirmButton:false
+        showConfirmButton: false
       }).then((result) => {
         if (result.dismiss === Swal.DismissReason.timer || result.dismiss === Swal.DismissReason.backdrop) {
           window.location.reload()
         }
       })
-    }else if(name == "" && email == ""){
+    } else if (name == "" && email == "") {
       Swal.fire({
-        title:"Alerta!",
-        text:"Debes ingresar los datos minimos e indispensables para el contacto!",
-        icon:"error"
+        title: "Alerta!",
+        text: "Debes ingresar los datos minimos e indispensables para el contacto!",
+        icon: "error"
       })
     }
-})
-  deleteInfo.addEventListener("click", () =>{
+  })
+  deleteInfo.addEventListener("click", () => {
 
     Swal.fire({
       title: 'Segur@ que deseas eliminar tus datos? ',
@@ -219,219 +219,47 @@ function form() {
 
       }
     })
-  }
-)}
+  })
+}
 
 function myProgram(data) {
-
   const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
     timer: 2000,
-    // timerProgressBar: true,
+    timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('click', ()=>{window.location.href("./index.html")})
+      toast.addEventListener('click', () => {
+        window.location.assign("./carrito.html")
+      })
+      toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
+      toast.style.cursor = "pointer"
     }
   })
+
   const allElements = [...data["response"]]
   const container = document.getElementById("container")
   const tittleTypo = document.title
   let property = null
-  let carrito = []
 
-  
-
-  if (tittleTypo.includes("Carrito")) {
-
-    if (localStorage.getItem("itemsCarrito")) {
-    let carritoSinRepetidos = []
-    let main = document.getElementsByClassName("main-cart")[0]
-    let tablaProductos = document.createElement("article")
-    let itemsCarrito = localStorage.getItem("itemsCarrito")
-    let items = itemsCarrito.split(",")
-    let itemsNoRep = new Set(items)
-    let totalAPagar = 0
-
-
-    items.forEach(function (item) {
-      carrito.push(...(allElements.filter(elemento => elemento._id == item)))
-    })
-
-    itemsNoRep.forEach(function (item) {
-      carritoSinRepetidos.push(...(allElements.filter(elemento => elemento._id == item)))
-    })
-
-
-
-    carrito.forEach(producto => {
-    if(totalAPagar != 0){
-       totalAPagar = totalAPagar + producto.precio
-     }else{
-       totalAPagar = producto.precio
-     }
-    })
-    let arrayRepetidos = []
-
-    for (let i = 0; i < carritoSinRepetidos.length; i++) {
-      let producto1 = carritoSinRepetidos[i]
-      producto1.vecesRepetido = 0
-      for (let iB = 0; iB < carrito.length; iB++) {
-        let producto2 = carrito[iB]
-
-        if (producto1 == producto2) {
-          producto1.vecesRepetido += 1
-          let nombreProductoRepetido = producto1.nombre
-            arrayRepetidos.push({
-              vecesRepetido:producto1.vecesRepetido,
-              productoRepetido:nombreProductoRepetido}
-              )
-            
-              // console.log(arrayRepetidos)
-          } 
-        }
-      }
-    
-      tablaProductos.classList.add("show-table")
-      tablaProductos.innerHTML = `
-      <table class="table table-hover">
-        <thead class="table-dark">
-         <tr>
-            <th>Producto</th>
-            <th class="text-center">Precio Unitario </th>
-            <th class="text-center">Cantidad</th>
-            <th class="text-center">Total a pagar</th>
-            <th></th>
-         </tr>
-        </thead>
-        <tbody class="table-light" id="table-body">
-
-        </tbody>
-        <tfoot class="table-dark table-active">
-        <tr>
-        <td class="text-center">Total:</td>
-          <td></td>
-          <td></td>
-          <td class="text-center">$ ${totalAPagar}</td>
-          <td></td>
-          </tr>
-        </tfoot>
-      </table>
-    `
-      main.appendChild(tablaProductos)
-      carritoSinRepetidos.map(elemento =>{
-        let tbody = document.getElementById("table-body")
-        let tr = document.createElement("tr")
-          tr.innerHTML += `
-            <tr>
-              <td class="producto">${elemento.nombre}</td>
-              <td>$${elemento.precio}</td>
-              <td>${elemento.vecesRepetido}</td>
-              <td>$${elemento.vecesRepetido * elemento.precio}</td>
-              <td>
-              <div class="plusMinus"><img src="./assets/plus.png" class="${elemento._id}A plusMinusButton"><img src="./assets/minus.png" class="${elemento._id}B plusMinusButton" ></div>
-              </td>
-              
-            </tr>
-            `
-          tbody.appendChild(tr)
-
-          let botonA = document.getElementsByClassName(elemento._id + "A")[0]
-          let botonB = document.getElementsByClassName(elemento._id+"B")[0]
-          
-          botonA.addEventListener("click",(e)=>{
-            // console.log(e.target.classList[0].slice(0,-1))
-            let productoAInsertar = e.target.classList[0].slice(0,-1)
-            items.push(productoAInsertar)
-            
-            localStorage.setItem("itemsCarrito",items)
-            
-            location.reload()
-
-
-
-          })
-
-          botonB.addEventListener("click",(e)=>{
-            // console.log(e.target.classList[0].slice(0,-1))
-            let productoAQuitar = e.target.classList[0].slice(0,-1)
-            let ordenar = [...items]
-            
-            ordenar.sort((a,b)=>a-b);
-            console.log(ordenar)
-            let indice = ordenar.indexOf(productoAQuitar)
-
-            if(indice != -1){
-              ordenar.splice(indice,1)
-            }
-            // items.pop(productoAQuitar)
-
-            localStorage.setItem("itemsCarrito",ordenar)
-            window.location.reload()
-          })
-
-        })
-      
-      // console.log("items",items)
-      // console.log("carrito",carrito)
-      // console.log("carrito sin rep",carritoSinRepetidos)
-        
-      let buttons = document.createElement("div")
-
-      let comprar = document.createElement("button")
-
-      let limpiarCarrito = document.createElement("button")
-
-      comprar.classList.add("btn","btn-primary")
-      comprar.innerText = "Comprar"
-
-      limpiarCarrito.classList.add("btn","btn-danger")
-      limpiarCarrito.innerText = "Eliminar carrito"
-      buttons.appendChild(comprar)
-
-      buttons.appendChild(limpiarCarrito)
-
-      buttons.classList.add("buttons-cart")
-      limpiarCarrito.addEventListener("click",()=>{
-        localStorage.removeItem("itemsCarrito")
-        window.location.reload()
-      })
-      // comprar.addEventListener("click", ()=> {
-      //   main.innerHTML = `
-      //   <div class="gracias">
-
-      //   <h1>Muchas gracias por su compra!</h1>
-      //   <div> </div>
-      //   </div>
-      //   `
-      // })
-      main.appendChild(buttons)
-
-    } else {
-
-
-
-
-     let main = document.getElementsByClassName("main-cart")[0]
-      let noItems = document.createElement("div")
-      noItems.classList.add("noItems")
-      noItems.innerHTML = `<h1> No hay productos en el carrito!.</h1>` 
-      main.appendChild(noItems)
-      
-    }
-  }
 
   function tienda() {
-    let items = []
+    let idItems = []
 
     if (tittleTypo.includes("Farmacia")) {
       property = "Medicamento"
+      marketPlace(property)
     } else if (tittleTypo.includes("Juguetes")) {
       property = "Juguete"
+      marketPlace(property)
+    } else if (tittleTypo.includes("Carrito")) {
+      carrito()
     }
 
-    function storage(property) {
+    function marketPlace(property) {
+      let carritoEntero = []
       let contador = 0
       let datosFiltrados = allElements.filter(elemento => elemento.tipo == property)
       datosFiltrados.map((elemento) => {
@@ -450,7 +278,8 @@ function myProgram(data) {
 
         carta.innerHTML = `
     
-    <img src= "${elemento.imagen}" alt="img" class="item-image">
+        <div class="image-container" style="background-image:url(${elemento.imagen});">
+        </div>
     <p class = "item-description"><strong> ${elemento.nombre}</strong></p>
     <p class = "item-description">${stock} </p>
     <p class = "item-description"><span class="dollar">$ ${elemento.precio} </span></p>
@@ -458,17 +287,12 @@ function myProgram(data) {
     <p class="text-capitalize read-more" id="read-${contador}" >leer más...</p>
     </div>
     <div class ="buttons">
-    
-    
     <button class="btn btn-success" id="${elemento._id}"><img src="./assets/carrito.png" alt="carro" class="item-carrito ${elemento._id}"> Añadir al carrito.</button>
 
       
     </div>
     
     `
-{/* <div id="cantidad">
-        <input type="number" min="1" max="${elemento.stock }" step="1" value="1">
-      </div> */}
         container.appendChild(carta)
         let desc = document.getElementById("read-" + contador)
         desc.addEventListener("click", () => {
@@ -503,17 +327,17 @@ function myProgram(data) {
             item = e.path[0].classList[1]
           }
           if (localStorage.getItem("itemsCarrito")) {
-            items = localStorage.getItem("itemsCarrito")
-            items = items.split(",")
+            idItems = localStorage.getItem("itemsCarrito")
+            idItems = idItems.split(",")
           }
 
-          items.push(item)
-          localStorage.setItem("itemsCarrito", items)
+          idItems.push(item)
+          localStorage.setItem("itemsCarrito", idItems)
 
           // console.log(items)
 
-          items.forEach(function (item) {
-            carrito.push(...(allElements.filter(elemento => elemento._id == item)))
+          idItems.forEach(function (item) {
+            carritoEntero.push(...(allElements.filter(elemento => elemento._id == item)))
           })
 
 
@@ -523,7 +347,7 @@ function myProgram(data) {
             customClass: {
               container: 'position-fixed'
             },
-            icon: "success",           
+            icon: "success",
           })
         })
         contador++
@@ -538,16 +362,143 @@ function myProgram(data) {
       `
       container.appendChild(perro)
       // datosFiltrados.forEach(item => {masYMenos(datosFiltrados.indexOf(item))})
-
     }
-    storage(property)
+
+    function carrito() {
+
+      if (localStorage.getItem("itemsCarrito")) {
+        let itemsCarrito = []
+        let idItems = []
+        let itemsNoRep = []
+        let carritoSinRepetidos = []
+        let totalAPagar = 0
+        let cantidadTotal = 0
+        let carritoEntero = []
+        let idTotal = document.getElementById("total-pagar")
+        let idTotalCantidad = document.getElementById("total-cantidad")
+
+        let tableBody = document.getElementById("table-body")
+        itemsCarrito = localStorage.getItem("itemsCarrito")
+        idItems = itemsCarrito.split(",")
+        itemsNoRep = new Set(itemsCarrito.split(","))
+        tableBody.innerHTML = ""
+
+
+        idItems.forEach(function (item) {
+          carritoEntero.push(...(allElements.filter(elemento => elemento._id == item)))
+        })
+
+        itemsNoRep.forEach(function (item) {
+          carritoSinRepetidos.push(...(allElements.filter(elemento => elemento._id == item)))
+        })
+        carritoEntero.forEach(producto => {
+          producto.vecesRepetido = 1
+          totalAPagar += producto.precio
+          cantidadTotal += 1
+          console.log("producto veces repetido: ", producto.vecesRepetido)
+        })
+
+        carritoSinRepetidos.forEach((producto) => {
+          let sumaTot = 0
+          let productoACalcularCantidad = carritoEntero.filter(item => item._id == producto._id)
+
+          sumaTot = productoACalcularCantidad.reduce((acc, productoX) => {
+            return acc = acc + productoX.vecesRepetido
+          }, 0)
+
+          producto.vecesRepetido = sumaTot
+          console.log(sumaTot)
+        })
+
+
+        function dibujarFilas() {
+          carritoSinRepetidos.forEach(producto => {
+            let tr = document.createElement("tr")
+
+            tr.innerHTML = `
+
+            <td class="producto">${producto.nombre}</td>
+
+            <td>$${producto.precio}</td>
+
+            <td>${producto.vecesRepetido}</td>
+
+            <td>$${producto.vecesRepetido * producto.precio}</td>
+
+            <td>
+            <div class="plusMinus"><img src="./assets/plus.png" class="${producto._id}A plusMinusButton"><img src="./assets/minus.png" class="${producto._id}B plusMinusButton" ></div>
+            </td>
+
+            `
+            tableBody.appendChild(tr)
+            let buttonPlus = document.getElementsByClassName(producto._id + "A")[0]
+            let buttonMinus = document.getElementsByClassName(producto._id + "B")[0]
+
+            buttonPlus.addEventListener("click", (e) => {
+              let productoAInsertar = e.target.classList[0].slice(0, -1)
+
+              console.log(productoAInsertar)
+
+              idItems.push(productoAInsertar)
+
+              localStorage.setItem("itemsCarrito", idItems)
+              console.log(idItems)
+              carrito()
+            })
+            buttonMinus.addEventListener("click", (e) => {
+              console.log(e.target.classList[0])
+
+              let productoAQuitar = e.target.classList[0].slice(0, -1)
+
+              let indice = idItems.indexOf(productoAQuitar)
+
+              if (indice != -1) {
+
+                idItems.splice(indice, 1)
+
+              }
+
+              localStorage.setItem("itemsCarrito", idItems)
+
+              carrito()
+            })
+
+          })
+        }
+        idTotalCantidad.innerText = cantidadTotal
+        idTotal.innerText = "$ " + totalAPagar
+
+        let limpiarCarrito = document.getElementById("limpiar")
+        let comprarCarrito = document.getElementById("comprar")
+
+        limpiarCarrito.addEventListener("click", () => {
+          localStorage.removeItem("itemsCarrito")
+          carrito()
+        })
+        comprarCarrito.addEventListener("click",()=>{
+
+          Swal.fire({
+            title:"Success",
+            text: "Your purchase is ready to be picke up. Now confirm the payment method",
+            icon:"success"
+
+          })
+
+        })
+
+        dibujarFilas()
+
+      } else {
+        let main = document.getElementsByClassName("main-cart")[0]
+        main.innerHTML = ""
+        let noItems = document.createElement("div")
+        noItems.classList.add("noItems")
+        noItems.innerHTML = `<h1> No hay productos en el carrito!.</h1>`
+        main.appendChild(noItems)
+      }
+    }
 
 
   }
-
-
-  if (!document.title.includes("Carrito")) {
-
-    tienda()
-  }
+  tienda()
 }
