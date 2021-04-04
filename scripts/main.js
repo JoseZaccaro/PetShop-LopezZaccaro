@@ -491,16 +491,7 @@ function myProgram(data) {
           localStorage.removeItem("itemsCarrito")
           carrito()
         })
-        comprarCarrito.addEventListener("click", () => {
 
-          Swal.fire({
-            title: "Success",
-            text: "Your purchase is ready to be picke up. Now confirm the payment method",
-            icon: "success"
-
-          })
-
-        })
 
         dibujarFilas()
 
