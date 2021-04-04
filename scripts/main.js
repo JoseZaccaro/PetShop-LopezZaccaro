@@ -383,7 +383,6 @@ function myProgram(data) {
         itemsNoRep = new Set(itemsCarrito.split(","))
         tableBody.innerHTML = ""
 
-
         idItems.forEach(function (item) {
           carritoEntero.push(...(allElements.filter(elemento => elemento._id == item)))
         })
@@ -391,7 +390,24 @@ function myProgram(data) {
         itemsNoRep.forEach(function (item) {
           carritoSinRepetidos.push(...(allElements.filter(elemento => elemento._id == item)))
         })
+
+
+      
+
+        carritoSinRepetidos.sort((a, b) => {
+          if (a.nombre > b.nombre) {
+            return 1;
+          }
+          if (a.nombre < b.nombre) {
+            return -1;
+          }
+          return 0;
+
+        })
+        console.log(carritoSinRepetidos)
+
         carritoEntero.forEach(producto => {
+
           producto.vecesRepetido = 1
           totalAPagar += producto.precio
           cantidadTotal += 1
@@ -475,12 +491,12 @@ function myProgram(data) {
           localStorage.removeItem("itemsCarrito")
           carrito()
         })
-        comprarCarrito.addEventListener("click",()=>{
+        comprarCarrito.addEventListener("click", () => {
 
           Swal.fire({
-            title:"Success",
+            title: "Success",
             text: "Your purchase is ready to be picke up. Now confirm the payment method",
-            icon:"success"
+            icon: "success"
 
           })
 
